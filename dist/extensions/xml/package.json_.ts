@@ -1,0 +1,14 @@
+import {F} from "jsr:@nfnitloop/deno-embedder@1.4.1/embed.ts"
+export default F({
+ size: 1459,
+ compression: "gzip",
+ encoded: `
+H4sIAAAAAAAA/4RUTYvcMAz9K1PBQj+yyfYaCj0XdntpD4VmKI7jZLz4C0uZ9bCd/14sJ9kpzLanJ/nJT1Ii+RmcsApaSNZABYPGYMTpazm7uXBvMqtQRh1I
+e8fsi5vZo4pYmI/1XX0HFYS5NxoPKkILR5R+UFCB0VI5zPIPX75DBcpN2imE9nmNaeE9nCuQ3lHU/UyFNMJNs5iy8/MZ9LDVrBIplzNnBupyWCccMgiUiZG8
+ZVxokUQx+mBdRhmIAflUYoj+8cWqZ1Qxu4MmsaIVgU3iTMqxgPXsDVTkx01oXDLrBbDgo+X6jJidPLCAcjPjEu9mDEpmy4dy4p8YVuEQfUA2uIDlo6Mi0m4q
+xNwvYsXauol9Mpw+9qnUEYeRwU0MyPfxsOZC8vHUexG5STxyFIk4KeJIMkxQETv2671ibXmPMm1MMetRG1KRRZ5w4GKfki6weEyu/y31BXTPYLjsZPRYjFAk
+0lzAWwP7CkYdke61yzP2tus+dd3n/Dnev/udPTxOxei6N4OXdAqq6/BDPoYKhNECefrgx8M9VDx9ex7TUU9zFMta1E2WXKf19i+6fkTv4Fyt84vX5rdMYEJD
+Wf4y7TdOi6+lxf+k3VcwRWGtiGWH1uBtk1D6oJbdJ5Vo2aUg6MAZ8ORIJIXcIdn75f5LV5eK+Jri0uEVVbyiuj9nlfzM8Cswh0GQul36gBacH9SurpuMv6wf
+ZqOwKQ/JGnVbLsWm126XH4Jm+0zJmt36Tbgrid7t/t3pxQW8cuFaExVEFTzqvD25izxa0MKk88bO0UALB6KAbdNMmg5zX0tvG6tl9OhHWvqpc/z5/AcAAP//
+AwABVOAKswUAAA==`,
+})

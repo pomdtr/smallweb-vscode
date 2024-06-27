@@ -1,0 +1,16 @@
+{
+    "name": "@smallweb/vscode",
+    "version": "0.0.1",
+    "exports": {
+        ".": "./mod.ts"
+    },
+    "tasks": {
+        "build": "deno run -A embedder.ts build"
+    },
+    "publish": {
+        "include": [
+            "embed",
+            "mod.ts"
+        ]
+    }
+}

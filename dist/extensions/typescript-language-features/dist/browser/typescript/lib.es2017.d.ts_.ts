@@ -1,0 +1,13 @@
+import {F} from "jsr:@nfnitloop/deno-embedder@1.4.1/embed.ts"
+export default F({
+ size: 1083,
+ compression: "gzip",
+ encoded: `
+H4sIAAAAAAAA/6ySXW/aMBSG7/0r3nHVIki6XmzSPiqlwRRrwUFJaNdLNxzAU7Aj25Tx76cwmJCmjZv69n38HMvnjfvv0H/Lw1Lb7p1erQOu6mtMde2st8uA
+1LrWOhW0NRGSpsEB8nDkyb3SImKZrsl4WmBrFuQQ1oSkVfWacEwGeCTntTW4jW5w1QG9Y9S7/oy93WKj9jA2YOuJhbX2WOqGQD9ragO0QW03baOVqQk7HdaH
+IUdFhOejwL4EpQ0UatvuYZcddXodVMA6hPZTHO92u0gdHhhZt4qb34CPM5FyWfLhbXTDWDURJdJ8xCFKzIr8UYz4CLlEItFPSoiyj/ukFOUAT6Ka5PMKT0lR
+JLISvEReIM3lSFQilyXyMRL5zL4JORqAi2rCC/Dvs4KXB1JMZ5ngowGETLP5SMiHP8pMTEWVdJbOcCLZ/yZVosr4AGNRyc4/zgskmCVFJdJ5lhSYzYtZXvIB
+m/IinSSySu4zUT13IpnLoZDjQsgHPuWyihgric4Xer7H08curYNvqdZLXaNRZrVVK8LKvpIz2qzQktto313zTJkFGr3R4dAnf9aY0zLZm7Ya/ZgxFscxvjha
+kqOuQMYOF7RU2yYMG/3ytRfclnrx3V/cISR/e/P+Qw/x3b/jj5F9+UF1uET5tXK02NDGuv1FNjhtVpcobUJziQn7lhbKObX3B/QXAAAA//8DAJ1/eSE7BAAA
+`,
+})

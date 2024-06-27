@@ -1,0 +1,11 @@
+import {F} from "jsr:@nfnitloop/deno-embedder@1.4.1/embed.ts"
+export default F({
+ size: 746,
+ compression: "gzip",
+ encoded: `
+H4sIAAAAAAAA/5RQQY7bMAx8SycL1HaFPCBAkAJ72tuiV1FBZJvOCpGlrCRvEET+eyFvGvTSFr2I4pCcGfKGzo8juxSxucEax8+fOTZYQaC1vjs9IInVFgLb
+FdQs0AbdnbhMSokbBGYoISEhoJZfBYEaSgnoKfln66Nxx1dtwj9HhMQBAgcocYM/s8MGBAh01kf+lTifXlxxFVMw7ljKd6dqVgJxCsFPrv8P0YWW8LsBJTB4
+W0jKhUYdTlyobohJh3KmPVFsVoGPxjsIsOsfILv+js+zgHE9u6ST8e7HZHkhMa4LrCO/LLVXnRKHsuy+KgR53Wzv8TvRpSn/WhJdiKJqqt1GEr4elNwvofnM
+6ubRQdRWZsiXN2M5Dz7kYXJd0c+j7oLP1Tgl3Vomit/qXUxh6lLWbUxBd6mA6XrmfA5mNMl8LG0LYjnl98knzilcc8tH4/K6IaqLwd5ntpGXxwy506l7y4Nx
+2tprXRztvlS7TWlv2fVErdwTKdXUuSy0J5LFuFo39VO9bp4g0PMfjlTkKnb93wULyTz/BAAA//8DABWNHN/qAgAA`,
+})
