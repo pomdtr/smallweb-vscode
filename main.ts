@@ -1,5 +1,5 @@
-import { createVSCode } from "./mod.ts";
+import { VSCode } from "./mod.ts";
 
-export default {
-    fetch: createVSCode(),
-};
+const vscode = new VSCode();
+
+export default vscode;

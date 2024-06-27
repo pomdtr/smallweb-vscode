@@ -10,6 +10,4 @@ const options = {
     ],
 };
 
-if (import.meta.main) {
-    await embedder.main({ options });
-}
+await embedder.main({ options });
