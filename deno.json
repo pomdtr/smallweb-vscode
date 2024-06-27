@@ -5,7 +5,10 @@
         ".": "./mod.ts"
     },
     "tasks": {
-        "build": "deno run -A embedder.ts build"
+        "build-extension": "cd extension && npm run build",
+        "build-frontend": "cd frontend && npm run build",
+        "embed-frontend": "deno run -A embedder.ts build",
+        "build": "deno task build-extension && deno task build-frontend && deno task embed-frontend"
     },
     "lock": false,
     "publish": {
