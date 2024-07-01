@@ -13,8 +13,13 @@
     "lock": false,
     "publish": {
         "include": [
-            "embed",
-            "mod.ts"
+            "mod.ts",
+            "file_server.ts",
+            "fs",
+            "dist"
+        ],
+        "exclude": [
+            "!dist/node_modules"
         ]
     }
 }

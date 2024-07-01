@@ -13,7 +13,7 @@ export type VSCodeConfig = {
 
 export class VSCode implements WebApp {
     constructor(public config: VSCodeConfig) {}
-    fetch = (req: Request) => {
+    fetch = (req: Request): Response | Promise<Response> => {
         const app = new Hono();
 
         app.get("/api/fs/readDir/:dir", async (c) => {
