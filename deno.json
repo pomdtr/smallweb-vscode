@@ -1,8 +1,10 @@
 {
     "name": "@smallweb/vscode",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "exports": {
-        ".": "./mod.ts"
+        ".": "./mod.ts",
+        "./local-fs": "./fs/local.ts",
+        "./val-town-fs": "./fs/val_town.ts"
     },
     "tasks": {
         "build-extension": "cd extension && npm run build",
