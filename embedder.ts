@@ -1,4 +1,4 @@
-import * as embedder from "jsr:@nfnitloop/deno-embedder@^1.4.5";
+import * as embedder from "jsr:@nfnitloop/deno-embedder@1.4.7";
 
 const options = {
     importMeta: import.meta,

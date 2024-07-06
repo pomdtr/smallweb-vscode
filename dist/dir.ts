@@ -1,4 +1,4 @@
-import {E} from "jsr:@nfnitloop/deno-embedder@1.4.5/embed.ts"
+import {E} from "jsr:@nfnitloop/deno-embedder@1.4.7/embed.ts"
 
 export default E({
   "code-192.png": () => import("./_code-192.png.ts"),

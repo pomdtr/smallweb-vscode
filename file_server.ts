@@ -1,4 +1,4 @@
-import type { Embeds } from "jsr:@nfnitloop/deno-embedder@^1.4.1/embed.ts";
+import type { Embeds } from "jsr:@nfnitloop/deno-embedder@1.4.7/embed.ts";
 import { extname } from "jsr:@std/path@^0.225.0/extname";
 import { contentType } from "jsr:@std/media-types@^0.224.1";
 
