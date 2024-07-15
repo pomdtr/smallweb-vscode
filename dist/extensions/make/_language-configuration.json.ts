@@ -1,8 +1,0 @@
-import {F} from "jsr:@nfnitloop/deno-embedder@1.4.7/embed.ts"
-export default F({
- size: 236,
- encoded: `
-eyJjb21tZW50cyI6eyJsaW5lQ29tbWVudCI6IiMifSwiYnJhY2tldHMiOltbInsiLCJ9Il0sWyJbIiwiXSJdLFsiKCIsIikiXV0sImF1dG9DbG9zaW5nUGFp
-cnMiOltbInsiLCJ9Il0sWyJbIiwiXSJdLFsiKCIsIikiXSx7Im9wZW4iOiInIiwiY2xvc2UiOiInIiwibm90SW4iOlsic3RyaW5nIiwiY29tbWVudCJdfSx7
-Im9wZW4iOiJcIiIsImNsb3NlIjoiXCIiLCJub3RJbiI6WyJzdHJpbmciLCJjb21tZW50Il19XX0=`,
-})
