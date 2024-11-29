@@ -17,7 +17,5 @@ jobs:
       - uses: denoland/setup-deno@v2
         with:
           deno-version: v2.x
-      - name: Build package
-        run: deno task build
       - name: Publish package
         run: deno publish
