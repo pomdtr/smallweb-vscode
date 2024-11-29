@@ -4,16 +4,18 @@ import embeds from "./static/mod.ts";
 import { escape } from "@std/html";
 import { createOpenApiDocument } from "hono-zod-openapi";
 import * as path from "@std/path";
+import { type LastLoginOptions, createToken, lastlogin } from "@pomdtr/lastlogin";
 
-export function createServer(params: {
+export function createFetchHandler(params: {
     rootDir: string;
-    token: string;
+    readOnly: boolean;
+    lastlogin: boolean | LastLoginOptions
 }) {
     const api = createApi({
         rootDir: params.rootDir,
-        token: params.token,
+        readOnly: params.readOnly,
     });
-    return new Hono()
+    const app = new Hono()
         .route("/api", api)
         .get("/openapi.json", (c) => {
             const doc = createOpenApiDocument(api, {
@@ -63,13 +65,24 @@ export function createServer(params: {
                 embed.text()
             );
 
+            let token: string | undefined;
+            if (params.lastlogin) {
+                const options = typeof params.lastlogin === "object" ? params.lastlogin : {};
+                token = await createToken({
+                    email: c.req.header("X-Lastlogin-Email"),
+                    domain: url.hostname,
+                    exp: Date.now() + 1000 * 60 * 60, // 1 hour
+                }, options)
+            }
+
+
             return new Response(
                 homepage.replace(
                     "{{VSCODE_WORKBENCH_WEB_CONFIGURATION}}",
                     escape(
                         JSON.stringify(workbenchConfig(url.host, {
                             path: c.req.path,
-                            token: params.token,
+                            token,
                         })),
                     ),
                 ),
@@ -80,6 +93,14 @@ export function createServer(params: {
                 },
             );
         });
+
+    if (params.lastlogin) {
+        const options = typeof params.lastlogin === "object" ? params.lastlogin : {};
+        return lastlogin(app.fetch, options);
+    } else {
+        return app.fetch
+    }
+
 }
 
 function workbenchConfig(host: string, options: {

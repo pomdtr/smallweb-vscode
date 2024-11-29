@@ -5,7 +5,6 @@ import z from "npm:zod@3.23.8";
 import { decodeBase64, encodeBase64 } from "@std/encoding/base64";
 import * as fs from "@std/fs";
 import { cors } from "hono/cors";
-import { bearerAuth } from "hono/bearer-auth";
 
 extendZodWithOpenApi(z);
 
@@ -30,13 +29,12 @@ function getFileType(stat: Deno.FileInfo | Deno.DirEntry): FileType {
 }
 
 export function createApi(params: {
+    readOnly: boolean;
     rootDir: string;
-    token: string | string[];
 }) {
     const rootDir = path.resolve(params.rootDir);
     return new Hono()
         .use("*", cors())
-        .use("/fs/*", bearerAuth({ token: params.token }))
         .post(
             "/fs/stat",
             openApi({

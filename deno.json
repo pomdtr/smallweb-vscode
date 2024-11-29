@@ -1,6 +1,6 @@
 {
   "name": "@smallweb/vscode",
-  "version": "0.0.9",
+  "version": "0.1.0",
   "exports": "./pkg/mod.ts",
   "license": "MIT",
   "publish": {
@@ -13,6 +13,8 @@
     "embed": "deno run -A jsr:@smallweb/embed@0.0.15 static pkg/static"
   },
   "imports": {
+    "@pomdtr/lastlogin": "jsr:@pomdtr/lastlogin@^0.5.10",
+    "@std/cli": "jsr:@std/cli@^1.0.7",
     "@std/encoding": "jsr:@std/encoding@^1.0.5",
     "@std/fs": "jsr:@std/fs@^1.0.5",
     "@std/html": "jsr:@std/html@^1.0.3",

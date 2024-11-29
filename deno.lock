@@ -12,6 +12,7 @@
     "jsr:@pomdtr/lastlogin@0.5.5": "0.5.5",
     "jsr:@pomdtr/lastlogin@0.5.6": "0.5.6",
     "jsr:@pomdtr/lastlogin@0.5.7": "0.5.7",
+    "jsr:@pomdtr/lastlogin@~0.5.10": "0.5.10",
     "jsr:@smallweb/embed@0.0.15": "0.0.15",
     "jsr:@smallweb/file-server@0.4.1": "0.4.1",
     "jsr:@std/assert@0.223": "0.223.0",
@@ -19,6 +20,7 @@
     "jsr:@std/bytes@~0.218.2": "0.218.2",
     "jsr:@std/cli@^1.0.0-rc.5": "1.0.6",
     "jsr:@std/cli@^1.0.6": "1.0.6",
+    "jsr:@std/cli@^1.0.7": "1.0.7",
     "jsr:@std/encoding@1.0.1": "1.0.1",
     "jsr:@std/encoding@^1.0.1": "1.0.5",
     "jsr:@std/encoding@^1.0.5": "1.0.5",
@@ -140,6 +142,13 @@
         "jsr:@std/http@^1.0.9"
       ]
     },
+    "@pomdtr/lastlogin@0.5.10": {
+      "integrity": "2674176ad2a8d666a38cc9c5eb7ec87f9b3e715044c074fa2e82afab2539b99e",
+      "dependencies": [
+        "jsr:@hono/hono",
+        "jsr:@std/http@^1.0.9"
+      ]
+    },
     "@smallweb/embed@0.0.15": {
       "integrity": "afb6e99b059681bbc3dd92adcba023a0941b1cd38a249e98d815d662ffbf0f7d",
       "dependencies": [
@@ -170,6 +179,9 @@
     },
     "@std/cli@1.0.6": {
       "integrity": "d22d8b38c66c666d7ad1f2a66c5b122da1704f985d3c47f01129f05abb6c5d3d"
+    },
+    "@std/cli@1.0.7": {
+      "integrity": "98359df9df586a69015ba570305183b0cb9e7d53c05ea2016ef9a3e77e82c7cd"
     },
     "@std/encoding@1.0.1": {
       "integrity": "5955c6c542ebb4ce6587c3b548dc71e07a6c27614f1976d1d3887b1196cf4e65"
@@ -412,6 +424,8 @@
   },
   "workspace": {
     "dependencies": [
+      "jsr:@pomdtr/lastlogin@~0.5.10",
+      "jsr:@std/cli@^1.0.7",
       "jsr:@std/encoding@^1.0.5",
       "jsr:@std/fs@^1.0.5",
       "jsr:@std/html@^1.0.3",
