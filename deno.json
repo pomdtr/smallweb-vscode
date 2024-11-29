@@ -10,7 +10,7 @@
     ]
   },
   "tasks": {
-    "embed": "deno run -A jsr:@smallweb/embed@0.0.15 static pkg/static"
+    "build": "deno run -A jsr:@smallweb/embed@0.0.15 static pkg/static"
   },
   "imports": {
     "@pomdtr/lastlogin": "jsr:@pomdtr/lastlogin@^0.5.10",
