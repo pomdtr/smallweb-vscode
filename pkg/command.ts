@@ -6,7 +6,7 @@ export function createCommand(params: {
     lastlogin: boolean | LastLoginOptions;
 }) {
     return async (args: string[]) => {
-        const { email } = parseArgs(args, { string: ["email"] })
+        const { email, exp } = parseArgs(args, { string: ["email", "exp", "description"] })
         if (!email) {
             console.error("Email is required");
             Deno.exitCode = 1;
@@ -21,7 +21,7 @@ export function createCommand(params: {
 
         const options = typeof params.lastlogin === "boolean" ? {} : params.lastlogin;
         const token = await createToken({
-            exp: Date.now() + 1000 * 60 * 60 * 24 * 30, // 30 days
+            exp: exp ? parseInt(exp) : Date.now() + 1000 * 60 * 60 * 24 * 30, // 30 days
             email,
             domain: params.domain,
         }, options);
