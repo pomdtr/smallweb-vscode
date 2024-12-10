@@ -1,13 +1,13 @@
 {
 	"name": "smallweb-vscode",
-	"displayName": "Smallweb",
-	"description": "Smallweb VS Code Integration",
-	"version": "0.0.5",
+	"displayName": "MemFS - a file system provider sample",
+	"description": "Showcase for the file system provider API, also useful for testing again document that are not on disk.",
+	"version": "0.0.7",
 	"publisher": "pomdtr",
 	"license": "MIT",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/pomdtr/smallweb.run"
+		"url": "https://github.com/Microsoft/vscode-extension-samples"
 	},
 	"engines": {
 		"vscode": "^1.74.0"
@@ -23,6 +23,7 @@
 		"dist/web/extension.js"
 	],
 	"browser": "./dist/web/extension.js",
+	"main": "out/src/extension",
 	"contributes": {
 		"commands": [
 			{
@@ -35,7 +36,7 @@
 			"commandPalette": [
 				{
 					"command": "smallweb.workspaceInit",
-					"when": "workbenchState !== workspace"
+					"when": "workbenchState != workspace"
 				}
 			]
 		},
@@ -53,26 +54,28 @@
 		}
 	},
 	"scripts": {
-		"vscode:prepublish": "npm run build",
-		"prepublishOnly": "npm run build",
-		"build": "tsc --noEmit && node esbuild.js",
+		"vscode:prepublish": "npm run compile && npm run package-web",
+		"compile": "tsc -p ./",
 		"lint": "eslint",
-		"watch": "tsc -watch -p ./"
+		"watch": "tsc -watch -p ./",
+		"compile-web": "webpack",
+		"watch-web": "webpack --watch",
+		"package-web": "webpack --mode production --devtool hidden-source-map"
 	},
 	"devDependencies": {
-		"@esbuild-plugins/node-globals-polyfill": "^0.2.3",
 		"@eslint/js": "^9.13.0",
 		"@stylistic/eslint-plugin": "^2.9.0",
 		"@types/node": "^20",
 		"@types/vscode": "^1.73.0",
-		"esbuild": "^0.24.0",
 		"eslint": "^9.13.0",
-		"glob": "^11.0.0",
+		"ts-loader": "^9.5.1",
 		"typescript": "^5.6.2",
-		"typescript-eslint": "^8.11.0"
+		"typescript-eslint": "^8.11.0",
+		"webpack": "^5.97.1",
+		"webpack-cli": "^5.1.4"
 	},
 	"dependencies": {
-		"fets": "^0.8.3",
+		"fets": "^0.8.4",
 		"js-base64": "^3.7.7"
 	}
 }

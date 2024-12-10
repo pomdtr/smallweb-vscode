@@ -1,30 +1,31 @@
-import { parseArgs } from "@std/cli";
-import { type LastLoginOptions, createToken } from "@pomdtr/lastlogin";
+import { program } from '@commander-js/extra-typings';
+import { sign } from "hono/jwt"
+import { open } from "@smallweb/open"
 
 export function createCommand(params: {
     domain: string;
-    lastlogin: boolean | LastLoginOptions;
+    password?: string;
 }) {
     return async (args: string[]) => {
-        const { email, exp } = parseArgs(args, { string: ["email", "exp", "description"] })
-        if (!email) {
-            console.error("Email is required");
-            Deno.exitCode = 1;
-            return;
-        }
+        const { SMALLWEB_APP_NAME, SMALLWEB_APP_URL } = Deno.env.toObject()
 
-        if (!params.lastlogin) {
-            console.error("Last login options are required");
-            Deno.exitCode = 1;
-            return;
-        }
+        program.name(SMALLWEB_APP_NAME)
 
-        const options = typeof params.lastlogin === "boolean" ? {} : params.lastlogin;
-        const token = await createToken({
-            exp: exp ? parseInt(exp) : Date.now() + 1000 * 60 * 60 * 24 * 30, // 30 days
-            email,
-            domain: params.domain,
-        }, options);
-        console.log(token);
+        program.command("create-token").action(async () => {
+            if (!params.password) {
+                console.error("No password provided")
+                Deno.exit(1)
+            }
+
+            const token = await sign({ iat: Date.now() / 1000 }, params.password)
+            console.log(token)
+        })
+
+        program.command("open").argument("<app>").action(async (app) => {
+            const url = new URL(app, SMALLWEB_APP_URL)
+            await open(url.toString())
+        })
+
+        await program.parseAsync(args, { from: "user" })
     }
 }

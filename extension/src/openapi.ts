@@ -1,712 +1,491 @@
 export default {
-    "info": {
-        "title": "VS Code API",
-        "version": "1.0.0"
+    openapi: "3.1.0",
+    info: {
+        title: "Smallweb Editor",
+        description: "Smallweb Editor API",
+        version: "1.0.0",
     },
-    "openapi": "3.1.0",
-    "paths": {
-        "/fs/stat": {
-            "post": {
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "type": "object",
-                                "properties": {
-                                    "path": {
-                                        "type": "string"
-                                    }
-                                },
-                                "required": [
-                                    "path"
-                                ]
-                            }
-                        }
-                    }
-                },
-                "responses": {
+    paths: {
+        "/api/fs/stat": {
+            post: {
+                responses: {
                     "200": {
-                        "description": "200 OK",
-                        "content": {
+                        description: "Success",
+                        content: {
                             "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "properties": {
-                                        "type": {
-                                            "anyOf": [
-                                                {
-                                                    "type": "number",
-                                                    "const": 1
-                                                },
-                                                {
-                                                    "type": "number",
-                                                    "const": 2
-                                                },
-                                                {
-                                                    "type": "number",
-                                                    "const": 64
-                                                }
-                                            ]
+                                schema: {
+                                    type: "object",
+                                    properties: {
+                                        type: {
+                                            anyOf: [
+                                                { type: "number", const: 1 },
+                                                { type: "number", const: 2 },
+                                                { type: "number", const: 64 },
+                                            ],
                                         },
-                                        "ctime": {
-                                            "type": "number"
-                                        },
-                                        "mtime": {
-                                            "type": "number"
-                                        },
-                                        "size": {
-                                            "type": "number"
-                                        }
+                                        ctime: { type: "number" },
+                                        mtime: { type: "number" },
+                                        size: { type: "number" },
                                     },
-                                    "required": [
-                                        "type",
-                                        "ctime",
-                                        "mtime",
-                                        "size"
-                                    ]
-                                }
-                            }
-                        }
+                                    required: ["type", "ctime", "mtime", "size"],
+                                },
+                            },
+                        },
                     },
                     "400": {
-                        "description": "400 Bad Request",
-                        "content": {
+                        description: "Bad Request",
+                        content: {
                             "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "properties": {
-                                        "error": {
-                                            "type": "string"
-                                        }
-                                    },
-                                    "required": [
-                                        "error"
-                                    ]
-                                }
-                            }
-                        }
+                                schema: {
+                                    type: "object",
+                                    properties: { error: { type: "string" } },
+                                    required: ["error"],
+                                },
+                            },
+                        },
                     },
                     "404": {
-                        "description": "404 Not Found",
-                        "content": {
+                        description: "Not Found",
+                        content: {
                             "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "properties": {
-                                        "error": {
-                                            "type": "string"
-                                        }
-                                    },
-                                    "required": [
-                                        "error"
-                                    ]
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/fs/readDirectory": {
-            "post": {
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "type": "object",
-                                "properties": {
-                                    "path": {
-                                        "type": "string"
-                                    }
+                                schema: {
+                                    type: "object",
+                                    properties: { error: { type: "string" } },
+                                    required: ["error"],
                                 },
-                                "required": [
-                                    "path"
-                                ]
-                            }
-                        }
-                    }
+                            },
+                        },
+                    },
                 },
-                "responses": {
+                operationId: "postApiFsStat",
+                requestBody: {
+                    content: {
+                        "application/json": {
+                            schema: {
+                                type: "object",
+                                properties: { path: { type: "string" } },
+                                required: ["path"],
+                            },
+                        },
+                    },
+                },
+            },
+        },
+        "/api/fs/readDirectory": {
+            post: {
+                responses: {
                     "200": {
-                        "description": "200 OK",
-                        "content": {
+                        description: "Success",
+                        content: {
                             "application/json": {
-                                "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "type": "object",
-                                        "properties": {
-                                            "name": {
-                                                "type": "string"
+                                schema: {
+                                    type: "array",
+                                    items: {
+                                        type: "object",
+                                        properties: {
+                                            name: { type: "string" },
+                                            type: {
+                                                anyOf: [
+                                                    { type: "number", const: 1 },
+                                                    { type: "number", const: 2 },
+                                                    { type: "number", const: 64 },
+                                                ],
                                             },
-                                            "type": {
-                                                "anyOf": [
-                                                    {
-                                                        "type": "number",
-                                                        "const": 1
-                                                    },
-                                                    {
-                                                        "type": "number",
-                                                        "const": 2
-                                                    },
-                                                    {
-                                                        "type": "number",
-                                                        "const": 64
-                                                    }
-                                                ]
-                                            }
                                         },
-                                        "required": [
-                                            "name",
-                                            "type"
-                                        ]
-                                    }
-                                }
-                            }
-                        }
+                                        required: ["name", "type"],
+                                    },
+                                },
+                            },
+                        },
                     },
                     "400": {
-                        "description": "400 Bad Request",
-                        "content": {
+                        description: "Bad Request",
+                        content: {
                             "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "properties": {
-                                        "error": {
-                                            "type": "string"
-                                        }
-                                    },
-                                    "required": [
-                                        "error"
-                                    ]
-                                }
-                            }
-                        }
+                                schema: {
+                                    type: "object",
+                                    properties: { error: { type: "string" } },
+                                    required: ["error"],
+                                },
+                            },
+                        },
                     },
                     "404": {
-                        "description": "404 Not Found",
-                        "content": {
+                        description: "Not Found",
+                        content: {
                             "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "properties": {
-                                        "error": {
-                                            "type": "string"
-                                        }
-                                    },
-                                    "required": [
-                                        "error"
-                                    ]
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/fs/createDirectory": {
-            "post": {
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "type": "object",
-                                "properties": {
-                                    "path": {
-                                        "type": "string"
-                                    }
+                                schema: {
+                                    type: "object",
+                                    properties: { error: { type: "string" } },
+                                    required: ["error"],
                                 },
-                                "required": [
-                                    "path"
-                                ]
-                            }
-                        }
-                    }
+                            },
+                        },
+                    },
                 },
-                "responses": {
+                operationId: "postApiFsReadDirectory",
+                requestBody: {
+                    content: {
+                        "application/json": {
+                            schema: {
+                                type: "object",
+                                properties: { path: { type: "string" } },
+                                required: ["path"],
+                            },
+                        },
+                    },
+                },
+            },
+        },
+        "/api/fs/createDirectory": {
+            post: {
+                responses: {
                     "200": {
-                        "description": "200 OK",
-                        "content": {
+                        description: "Success",
+                        content: {
                             "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "properties": {
-                                        "success": {
-                                            "type": "boolean"
-                                        }
-                                    },
-                                    "required": [
-                                        "success"
-                                    ]
-                                }
-                            }
-                        }
+                                schema: {
+                                    type: "object",
+                                    properties: { success: { type: "boolean" } },
+                                    required: ["success"],
+                                },
+                            },
+                        },
                     },
                     "400": {
-                        "description": "400 Bad Request",
-                        "content": {
+                        description: "Bad Request",
+                        content: {
                             "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "properties": {
-                                        "error": {
-                                            "type": "string"
-                                        }
-                                    },
-                                    "required": [
-                                        "error"
-                                    ]
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/fs/readFile": {
-            "post": {
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "type": "object",
-                                "properties": {
-                                    "path": {
-                                        "type": "string"
-                                    }
+                                schema: {
+                                    type: "object",
+                                    properties: { error: { type: "string" } },
+                                    required: ["error"],
                                 },
-                                "required": [
-                                    "path"
-                                ]
-                            }
-                        }
-                    }
+                            },
+                        },
+                    },
                 },
-                "responses": {
+                operationId: "postApiFsCreateDirectory",
+                requestBody: {
+                    content: {
+                        "application/json": {
+                            schema: {
+                                type: "object",
+                                properties: { path: { type: "string" } },
+                                required: ["path"],
+                            },
+                        },
+                    },
+                },
+            },
+        },
+        "/api/fs/readFile": {
+            post: {
+                responses: {
                     "200": {
-                        "description": "200 OK",
-                        "content": {
+                        description: "Success",
+                        content: {
                             "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "properties": {
-                                        "success": {
-                                            "type": "boolean"
+                                schema: {
+                                    type: "object",
+                                    properties: {
+                                        success: { type: "boolean" },
+                                        b64: { type: "string" },
+                                    },
+                                    required: ["success", "b64"],
+                                },
+                            },
+                        },
+                    },
+                    "400": {
+                        description: "Bad Request",
+                        content: {
+                            "application/json": {
+                                schema: {
+                                    type: "object",
+                                    properties: { error: { type: "string" } },
+                                    required: ["error"],
+                                },
+                            },
+                        },
+                    },
+                    "404": {
+                        description: "Not Found",
+                        content: {
+                            "application/json": {
+                                schema: {
+                                    type: "object",
+                                    properties: { error: { type: "string" } },
+                                    required: ["error"],
+                                },
+                            },
+                        },
+                    },
+                },
+                operationId: "postApiFsReadFile",
+                requestBody: {
+                    content: {
+                        "application/json": {
+                            schema: {
+                                type: "object",
+                                properties: { path: { type: "string" } },
+                                required: ["path"],
+                            },
+                        },
+                    },
+                },
+            },
+        },
+        "/api/fs/writeFile": {
+            post: {
+                responses: {
+                    "200": {
+                        description: "Success",
+                        content: {
+                            "application/json": {
+                                schema: {
+                                    type: "object",
+                                    properties: { success: { type: "boolean" } },
+                                    required: ["success"],
+                                },
+                            },
+                        },
+                    },
+                    "400": {
+                        description: "Bad Request",
+                        content: {
+                            "application/json": {
+                                schema: {
+                                    type: "object",
+                                    properties: { error: { type: "string" } },
+                                    required: ["error"],
+                                },
+                            },
+                        },
+                    },
+                    "404": {
+                        description: "Not Found",
+                        content: {
+                            "application/json": {
+                                schema: {
+                                    type: "object",
+                                    properties: { error: { type: "string" } },
+                                    required: ["error"],
+                                },
+                            },
+                        },
+                    },
+                },
+                operationId: "postApiFsWriteFile",
+                requestBody: {
+                    content: {
+                        "application/json": {
+                            schema: {
+                                type: "object",
+                                properties: {
+                                    path: { type: "string" },
+                                    b64: { type: "string" },
+                                    options: {
+                                        type: "object",
+                                        properties: {
+                                            create: { type: "boolean" },
+                                            overwrite: { type: "boolean" },
                                         },
-                                        "b64": {
-                                            "type": "string"
-                                        }
+                                        required: ["create", "overwrite"],
                                     },
-                                    "required": [
-                                        "success",
-                                        "b64"
-                                    ]
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "400 Bad Request",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "properties": {
-                                        "error": {
-                                            "type": "string"
-                                        }
-                                    },
-                                    "required": [
-                                        "error"
-                                    ]
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "404 Not Found",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "properties": {
-                                        "error": {
-                                            "type": "string"
-                                        }
-                                    },
-                                    "required": [
-                                        "error"
-                                    ]
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/fs/writeFile": {
-            "post": {
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "type": "object",
-                                "properties": {
-                                    "path": {
-                                        "type": "string"
-                                    },
-                                    "b64": {
-                                        "type": "string"
-                                    },
-                                    "options": {
-                                        "type": "object",
-                                        "properties": {
-                                            "create": {
-                                                "type": "boolean"
-                                            },
-                                            "overwrite": {
-                                                "type": "boolean"
-                                            }
-                                        },
-                                        "required": [
-                                            "create",
-                                            "overwrite"
-                                        ]
-                                    }
                                 },
-                                "required": [
-                                    "path",
-                                    "b64",
-                                    "options"
-                                ]
-                            }
-                        }
-                    }
+                                required: ["path", "b64", "options"],
+                            },
+                        },
+                    },
                 },
-                "responses": {
-                    "200": {
-                        "description": "200 OK",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "properties": {
-                                        "success": {
-                                            "type": "boolean"
-                                        }
-                                    },
-                                    "required": [
-                                        "success"
-                                    ]
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "400 Bad Request",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "properties": {
-                                        "error": {
-                                            "type": "string"
-                                        }
-                                    },
-                                    "required": [
-                                        "error"
-                                    ]
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "404 Not Found",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "properties": {
-                                        "error": {
-                                            "type": "string"
-                                        }
-                                    },
-                                    "required": [
-                                        "error"
-                                    ]
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+            },
         },
-        "/fs/copy": {
-            "post": {
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "type": "object",
-                                "properties": {
-                                    "source": {
-                                        "type": "string"
-                                    },
-                                    "destination": {
-                                        "type": "string"
-                                    },
-                                    "options": {
-                                        "type": "object",
-                                        "properties": {
-                                            "overwrite": {
-                                                "type": "boolean"
-                                            }
-                                        },
-                                        "required": [
-                                            "overwrite"
-                                        ]
-                                    }
-                                },
-                                "required": [
-                                    "source",
-                                    "destination",
-                                    "options"
-                                ]
-                            }
-                        }
-                    }
-                },
-                "responses": {
+        "/api/fs/copy": {
+            post: {
+                responses: {
                     "200": {
-                        "description": "200 OK",
-                        "content": {
+                        description: "Success",
+                        content: {
                             "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "properties": {
-                                        "success": {
-                                            "type": "boolean"
-                                        }
-                                    },
-                                    "required": [
-                                        "success"
-                                    ]
-                                }
-                            }
-                        }
+                                schema: {
+                                    type: "object",
+                                    properties: { success: { type: "boolean" } },
+                                    required: ["success"],
+                                },
+                            },
+                        },
                     },
                     "400": {
-                        "description": "400 Bad Request",
-                        "content": {
+                        description: "Bad Request",
+                        content: {
                             "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "properties": {
-                                        "error": {
-                                            "type": "string"
-                                        }
-                                    },
-                                    "required": [
-                                        "error"
-                                    ]
-                                }
-                            }
-                        }
+                                schema: {
+                                    type: "object",
+                                    properties: { error: { type: "string" } },
+                                    required: ["error"],
+                                },
+                            },
+                        },
                     },
                     "404": {
-                        "description": "404 Not Found",
-                        "content": {
+                        description: "Not Found",
+                        content: {
                             "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "properties": {
-                                        "error": {
-                                            "type": "string"
-                                        }
+                                schema: {
+                                    type: "object",
+                                    properties: { error: { type: "string" } },
+                                    required: ["error"],
+                                },
+                            },
+                        },
+                    },
+                },
+                operationId: "postApiFsCopy",
+                requestBody: {
+                    content: {
+                        "application/json": {
+                            schema: {
+                                type: "object",
+                                properties: {
+                                    source: { type: "string" },
+                                    destination: { type: "string" },
+                                    options: {
+                                        type: "object",
+                                        properties: { overwrite: { type: "boolean" } },
+                                        required: ["overwrite"],
                                     },
-                                    "required": [
-                                        "error"
-                                    ]
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+                                },
+                                required: ["source", "destination"],
+                            },
+                        },
+                    },
+                },
+            },
         },
-        "/fs/rename": {
-            "post": {
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "type": "object",
-                                "properties": {
-                                    "oldPath": {
-                                        "type": "string"
-                                    },
-                                    "newPath": {
-                                        "type": "string"
-                                    },
-                                    "overwrite": {
-                                        "type": "boolean"
-                                    }
-                                },
-                                "required": [
-                                    "oldPath",
-                                    "newPath",
-                                    "overwrite"
-                                ]
-                            }
-                        }
-                    }
-                },
-                "responses": {
+        "/api/fs/rename": {
+            post: {
+                responses: {
                     "200": {
-                        "description": "200 OK",
-                        "content": {
+                        description: "Success",
+                        content: {
                             "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "properties": {
-                                        "success": {
-                                            "type": "boolean"
-                                        }
-                                    },
-                                    "required": [
-                                        "success"
-                                    ]
-                                }
-                            }
-                        }
+                                schema: {
+                                    type: "object",
+                                    properties: { success: { type: "boolean" } },
+                                    required: ["success"],
+                                },
+                            },
+                        },
                     },
                     "400": {
-                        "description": "400 Bad Request",
-                        "content": {
+                        description: "Bad Request",
+                        content: {
                             "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "properties": {
-                                        "error": {
-                                            "type": "string"
-                                        }
-                                    },
-                                    "required": [
-                                        "error"
-                                    ]
-                                }
-                            }
-                        }
+                                schema: {
+                                    type: "object",
+                                    properties: { error: { type: "string" } },
+                                    required: ["error"],
+                                },
+                            },
+                        },
                     },
                     "404": {
-                        "description": "404 Not Found",
-                        "content": {
+                        description: "Not Found",
+                        content: {
                             "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "properties": {
-                                        "error": {
-                                            "type": "string"
-                                        }
+                                schema: {
+                                    type: "object",
+                                    properties: { error: { type: "string" } },
+                                    required: ["error"],
+                                },
+                            },
+                        },
+                    },
+                },
+                operationId: "postApiFsRename",
+                requestBody: {
+                    content: {
+                        "application/json": {
+                            schema: {
+                                type: "object",
+                                properties: {
+                                    oldPath: { type: "string" },
+                                    newPath: { type: "string" },
+                                    options: {
+                                        type: "object",
+                                        properties: { overwrite: { type: "boolean" } },
+                                        required: ["overwrite"],
                                     },
-                                    "required": [
-                                        "error"
-                                    ]
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+                                },
+                                required: ["oldPath", "newPath"],
+                            },
+                        },
+                    },
+                },
+            },
         },
-        "/fs/delete": {
-            "post": {
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "type": "object",
-                                "properties": {
-                                    "path": {
-                                        "type": "string"
-                                    },
-                                    "options": {
-                                        "type": "object",
-                                        "properties": {
-                                            "recursive": {
-                                                "type": "boolean"
-                                            }
-                                        },
-                                        "required": [
-                                            "recursive"
-                                        ]
-                                    }
-                                },
-                                "required": [
-                                    "path",
-                                    "options"
-                                ]
-                            }
-                        }
-                    }
-                },
-                "responses": {
+        "/api/fs/delete": {
+            post: {
+                responses: {
                     "200": {
-                        "description": "200 OK",
-                        "content": {
+                        description: "Success",
+                        content: {
                             "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "properties": {
-                                        "success": {
-                                            "type": "boolean"
-                                        }
-                                    },
-                                    "required": [
-                                        "success"
-                                    ]
-                                }
-                            }
-                        }
+                                schema: {
+                                    type: "object",
+                                    properties: { success: { type: "boolean" } },
+                                    required: ["success"],
+                                },
+                            },
+                        },
                     },
                     "400": {
-                        "description": "400 Bad Request",
-                        "content": {
+                        description: "Bad Request",
+                        content: {
                             "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "properties": {
-                                        "error": {
-                                            "type": "string"
-                                        }
-                                    },
-                                    "required": [
-                                        "error"
-                                    ]
-                                }
-                            }
-                        }
+                                schema: {
+                                    type: "object",
+                                    properties: { error: { type: "string" } },
+                                    required: ["error"],
+                                },
+                            },
+                        },
                     },
                     "404": {
-                        "description": "404 Not Found",
-                        "content": {
+                        description: "Not Found",
+                        content: {
                             "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "properties": {
-                                        "error": {
-                                            "type": "string"
-                                        }
+                                schema: {
+                                    type: "object",
+                                    properties: { error: { type: "string" } },
+                                    required: ["error"],
+                                },
+                            },
+                        },
+                    },
+                },
+                operationId: "postApiFsDelete",
+                requestBody: {
+                    content: {
+                        "application/json": {
+                            schema: {
+                                type: "object",
+                                properties: {
+                                    path: { type: "string" },
+                                    options: {
+                                        type: "object",
+                                        properties: { recursive: { type: "boolean" } },
+                                        required: ["recursive"],
                                     },
-                                    "required": [
-                                        "error"
-                                    ]
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
+                                },
+                                required: ["path"],
+                            },
+                        },
+                    },
+                },
+            },
+        },
+    },
+    components: { schemas: {} },
 } as const;

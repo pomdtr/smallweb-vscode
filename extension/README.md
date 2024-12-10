@@ -1,1 +1,1 @@
-# Smallweb
+# Smallweb extension for VS Code

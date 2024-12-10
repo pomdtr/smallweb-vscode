@@ -1,6 +1,6 @@
 {
   "name": "@smallweb/vscode",
-  "version": "0.1.0",
+  "version": "0.1.7",
   "exports": "./pkg/mod.ts",
   "license": "MIT",
   "publish": {
@@ -13,17 +13,21 @@
     ]
   },
   "tasks": {
-    "build": "deno run -A jsr:@smallweb/embed@0.0.15 static pkg/static"
+    "build": "deno run -A jsr:@smallweb/embed@0.0.15 static pkg/static",
+    "test": "rm -r data && mkdir data && hurl --test vscode.hurl"
   },
   "imports": {
-    "@pomdtr/lastlogin": "jsr:@pomdtr/lastlogin@^0.5.10",
-    "@std/cli": "jsr:@std/cli@^1.0.7",
+    "@commander-js/extra-typings": "npm:@commander-js/extra-typings@^12.1.0",
+    "@scalar/hono-api-reference": "npm:@scalar/hono-api-reference@^0.5.163",
+    "@smallweb/open": "jsr:@smallweb/open@^0.1.1",
+    "@std/cli": "jsr:@std/cli@^1.0.8",
     "@std/encoding": "jsr:@std/encoding@^1.0.5",
     "@std/fs": "jsr:@std/fs@^1.0.5",
     "@std/html": "jsr:@std/html@^1.0.3",
     "@std/path": "jsr:@std/path@^1.0.8",
     "hono": "npm:hono@^4.6.10",
+    "hono-openapi": "npm:hono-openapi@^0.2.1",
     "zod": "npm:zod@^3.23.8",
-    "hono-zod-openapi": "npm:hono-zod-openapi@^0.5.0"
+    "zod-openapi": "npm:zod-openapi@^4.1.0"
   }
 }

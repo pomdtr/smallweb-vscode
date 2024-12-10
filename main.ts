@@ -1,7 +1,8 @@
 import { VSCode } from "./pkg/mod.ts";
 
 const vscode = new VSCode({
-    lastlogin: true,
+    readOnly: ["/readonly.txt"],
+    password: "password",
 });
 
 export default vscode;

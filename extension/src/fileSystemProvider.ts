@@ -9,16 +9,15 @@ import { createClient, type NormalizeOAS } from 'fets';
 import { Base64 } from 'js-base64';
 import openapi from './openapi';
 
-export class SmallwebProvider implements vscode.FileSystemProvider /*, vscode.FileSearchProviderNew, vscode.TextSearchProviderNew */ {
-
+export class SmallwebFS implements vscode.FileSystemProvider {
 	private clients: Record<string, ReturnType<typeof this.createClient>> = {};
 
-	constructor(private tokens: Record<string, string>) { }
+	constructor(private tokens?: Record<string, string>) { }
 
 	// --- manage file metadata
 	async stat(uri: vscode.Uri) {
 		const client = this.getClient(uri);
-		const resp = await client['/fs/stat'].post({
+		const resp = await client['/api/fs/stat'].post({
 			json: { path: uri.path }
 		})
 
@@ -35,7 +34,7 @@ export class SmallwebProvider implements vscode.FileSystemProvider /*, vscode.Fi
 
 	async readDirectory(uri: vscode.Uri) {
 		const client = this.getClient(uri);
-		const resp = await client['/fs/readDirectory'].post({
+		const resp = await client['/api/fs/readDirectory'].post({
 			json: { path: uri.path }
 		})
 
@@ -55,7 +54,7 @@ export class SmallwebProvider implements vscode.FileSystemProvider /*, vscode.Fi
 
 	async readFile(uri: vscode.Uri) {
 		const client = this.getClient(uri);
-		const resp = await client['/fs/readFile'].post({
+		const resp = await client['/api/fs/readFile'].post({
 			json: { path: uri.path }
 		})
 
@@ -74,7 +73,7 @@ export class SmallwebProvider implements vscode.FileSystemProvider /*, vscode.Fi
 	async writeFile(uri: vscode.Uri, content: Uint8Array, options: { create: boolean, overwrite: boolean }) {
 		const client = this.getClient(uri);
 		const b64 = Base64.fromUint8Array(content)
-		const res = await client['/fs/writeFile'].post({
+		const res = await client['/api/fs/writeFile'].post({
 			json: { path: uri.path, b64, options: { create: options.create, overwrite: options.overwrite } }
 		})
 
@@ -91,8 +90,8 @@ export class SmallwebProvider implements vscode.FileSystemProvider /*, vscode.Fi
 		}
 
 		const client = this.getClient(oldUri);
-		const resp = await client['/fs/rename'].post({
-			json: { oldPath: oldUri.path, newPath: newUri.path, overwrite: options.overwrite }
+		const resp = await client['/api/fs/rename'].post({
+			json: { oldPath: oldUri.path, newPath: newUri.path, options: options }
 		})
 
 		if (resp.status === 404) {
@@ -107,7 +106,7 @@ export class SmallwebProvider implements vscode.FileSystemProvider /*, vscode.Fi
 
 	async delete(uri: vscode.Uri, options: { recursive: boolean }) {
 		const client = this.getClient(uri);
-		const resp = await client['/fs/delete'].post({
+		const resp = await client['/api/fs/delete'].post({
 			json: { path: uri.path, options: { recursive: options.recursive } }
 		})
 
@@ -122,7 +121,7 @@ export class SmallwebProvider implements vscode.FileSystemProvider /*, vscode.Fi
 
 	async createDirectory(uri: vscode.Uri) {
 		const client = this.getClient(uri);
-		const resp = await client['/fs/createDirectory'].post({
+		const resp = await client['/api/fs/createDirectory'].post({
 			json: { path: uri.path }
 		})
 
@@ -137,7 +136,7 @@ export class SmallwebProvider implements vscode.FileSystemProvider /*, vscode.Fi
 		}
 
 		const client = this.getClient(source);
-		const resp = await client['/fs/copy'].post({
+		const resp = await client['/api/fs/copy'].post({
 			json: { source: source.path, destination: destination.path, options: { overwrite: options.overwrite } }
 		})
 
@@ -146,18 +145,6 @@ export class SmallwebProvider implements vscode.FileSystemProvider /*, vscode.Fi
 		}
 
 	}
-
-	provideFileSearchResults(pattern: string, options: vscode.FileSearchProviderOptions, token: vscode.CancellationToken): vscode.ProviderResult<vscode.Uri[]> {
-		return []
-	}
-
-	provideTextSearchResults(query: vscode.TextSearchQueryNew, options: vscode.TextSearchProviderOptions, progress: vscode.Progress<vscode.TextSearchResultNew>, token: vscode.CancellationToken): vscode.ProviderResult<vscode.TextSearchCompleteNew> {
-		return {
-			limitHit: false
-		}
-	}
-
-
 
 	private _emitter = new vscode.EventEmitter<vscode.FileChangeEvent[]>();
 
@@ -170,9 +157,17 @@ export class SmallwebProvider implements vscode.FileSystemProvider /*, vscode.Fi
 
 	private createClient(uri: vscode.Uri) {
 		const searchParams = new URLSearchParams(uri.query)
-		const token = searchParams.get('token') || this.tokens[uri.authority]
+		let token: string | null
+		if (searchParams.has('token')) {
+			token = searchParams.get('token')
+		} else if (this.tokens) {
+			token = this.tokens[uri.authority] || null
+		} else {
+			token = null
+		}
+
 		return createClient<NormalizeOAS<typeof openapi>>({
-			endpoint: `https://${uri.authority}/api`,
+			endpoint: `https://${uri.authority}`,
 			globalParams: token ? { headers: { Authorization: `Bearer ${token}` } } : {}
 		})
 	}
