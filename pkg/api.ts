@@ -418,10 +418,7 @@ export function createApi(params: {
                     return c.json({ error: "File already exists" }, 400);
                 }
 
-                await Deno.copyFile(
-                    fullSourcePath,
-                    destinationPath,
-                );
+                await fs.copy(fullSourcePath, destinationPath);
                 return c.json({ success: true });
             },
         )
