@@ -1,13 +1,13 @@
 {
 	"name": "smallweb-vscode",
-	"displayName": "MemFS - a file system provider sample",
+	"displayName": "VS Code integration for Smallweb",
 	"description": "Showcase for the file system provider API, also useful for testing again document that are not on disk.",
-	"version": "0.0.7",
+	"version": "0.0.9",
 	"publisher": "pomdtr",
 	"license": "MIT",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/Microsoft/vscode-extension-samples"
+		"url": "https://github.com/pomdtr/smallweb-vscode.git"
 	},
 	"engines": {
 		"vscode": "^1.74.0"
@@ -16,7 +16,8 @@
 		"Other"
 	],
 	"activationEvents": [
-		"onFileSystem:smallweb"
+		"onFileSystem:smallweb",
+		"workspaceContains:.smallweb"
 	],
 	"files": [
 		"package.nls.json",
@@ -30,6 +31,12 @@
 				"command": "smallweb.workspaceInit",
 				"title": "Setup Workspace",
 				"category": "Smallweb"
+			},
+			{
+				"command": "smallweb.openApp",
+				"title": "Open App",
+				"category": "Smallweb",
+				"enablement": "smallweb.directoryExists"
 			}
 		],
 		"menus": {
@@ -55,6 +62,7 @@
 	},
 	"scripts": {
 		"vscode:prepublish": "npm run compile && npm run package-web",
+		"prepublishOnly": "npm run vscode:prepublish",
 		"compile": "tsc -p ./",
 		"lint": "eslint",
 		"watch": "tsc -watch -p ./",

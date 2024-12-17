@@ -1,8 +1,8 @@
 import { VSCode } from "./pkg/mod.ts";
 
 const vscode = new VSCode({
-    readOnly: ["/readonly.txt"],
-    password: "password",
+    rootDir: Deno.env.get("SMALLWEB_DIR"),
+    readOnly: ["/readonly.txt"]
 });
 
 export default vscode;

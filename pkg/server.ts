@@ -211,7 +211,7 @@ function workbenchConfig(host: string, options: {
             {
                 "scheme": "https",
                 "authority": "cdn.jsdelivr.net",
-                "path": "npm/smallweb-vscode@0.0.7",
+                "path": "/npm/smallweb-vscode@0.0.9",
             },
         ],
     };
