@@ -96,8 +96,10 @@ export function createFetchHandler(params: {
         const authorization = c.req.header("authorization");
         if (authorization) {
             const token = authorization.replace("Bearer ", "");
-            if (!await verify(token, params.password)) {
-                return new Response("Unauthorized", { status: 401, headers: { "WWW-Authenticate": "Bearer" } });
+            try {
+                await verify(token, params.password)
+            } catch (_) {
+                return c.newResponse("Unauthorized", { status: 401 })
             }
 
             await next()
@@ -109,12 +111,15 @@ export function createFetchHandler(params: {
             return c.redirect("/auth/login")
         }
 
-        if (!await verify(token, params.password)) {
+        try {
+            await verify(token, params.password)
+        } catch (_) {
             deleteCookie(c, AUTH_COOKIE)
             return c.redirect("/auth/login")
         }
 
         await next()
+        return
     })
 
     app.route("/api", api)
