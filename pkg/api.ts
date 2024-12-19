@@ -9,7 +9,7 @@ import { resolver, validator as zValidator } from "hono-openapi/zod";
 import "zod-openapi/extend";
 
 
-const FileType = z.union([z.literal(1), z.literal(2), z.literal(64)]);
+const FileType = z.union([z.literal(1), z.literal(2), z.literal(64), z.number()]);
 type FileType = z.infer<typeof FileType>;
 
 const FileStat = z.object({
@@ -20,9 +20,15 @@ const FileStat = z.object({
     permissions: z.literal(1).optional(),
 });
 
-function getFileType(stat: Deno.FileInfo | Deno.DirEntry): FileType {
+function getFileType(fullPath: string, stat: Deno.FileInfo | Deno.DirEntry): FileType {
     if (stat.isSymlink) {
-        return 64;
+        const target = Deno.readLinkSync(fullPath)
+        const targetPath = path.resolve(path.join(path.dirname(fullPath), target));
+        const targetStat = Deno.statSync(targetPath);
+        if (targetStat.isDirectory) {
+            return 2 | 64;
+        }
+        return 1 | 64;
     }
     if (stat.isDirectory) {
         return 2;
@@ -102,7 +108,7 @@ export function createApi(params: {
 
                 const stat = await Deno.stat(fullPath);
                 return c.json({
-                    type: getFileType(stat),
+                    type: getFileType(fullPath, stat),
                     ctime: stat.birthtime?.getTime() || 0,
                     mtime: stat.mtime?.getTime() || 0,
                     size: stat.size,
@@ -162,7 +168,7 @@ export function createApi(params: {
                 return c.json(
                     entries.map((entry) => ({
                         name: entry.name,
-                        type: getFileType(entry),
+                        type: getFileType(path.join(fullPath, entry.name), entry),
                     })),
                 );
             },

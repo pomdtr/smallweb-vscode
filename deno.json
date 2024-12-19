@@ -1,6 +1,6 @@
 {
   "name": "@smallweb/vscode",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "exports": "./pkg/mod.ts",
   "license": "MIT",
   "publish": {
