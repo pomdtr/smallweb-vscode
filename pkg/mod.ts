@@ -1,5 +1,5 @@
-import { createFetchHandler } from "./server.ts";
-import { createCommand } from "./command.ts";
+import { createServer } from "./server.ts";
+import { createCli } from "./cli.ts";
 import * as path from "@std/path";
 
 export type VSCodeConfig = {
@@ -10,24 +10,25 @@ export type VSCodeConfig = {
 
 export class VSCode {
     private server
-    private command
+    private cli
 
     constructor(config: VSCodeConfig = {}) {
-        this.server = createFetchHandler({
+        this.server = createServer({
             rootDir: path.resolve(config.rootDir || "./data"),
             readOnly: config.readOnly || false,
             password: config.password || Deno.env.get("VSCODE_PASSWORD"),
         });
 
-        const url = Deno.env.get("SMALLWEB_APP_URL")!
-        const domain = new URL(url).hostname;
-
-        this.command = createCommand({
-            domain,
+        this.cli = createCli({
             password: config.password || Deno.env.get("VSCODE_PASSWORD"),
         });
     }
 
-    fetch: (req: Request) => Response | Promise<Response> = (req) => this.server.fetch(req);
-    run: (args: string[]) => void | Promise<void> = (args) => this.command(args);
+    fetch: (req: Request) => Response | Promise<Response> = (req) => {
+        return this.server.fetch(req);
+    }
+
+    run: (args: string[]) => void | Promise<void> = async (args) => {
+        await this.cli.parseAsync(args, { from: "user" })
+    }
 }

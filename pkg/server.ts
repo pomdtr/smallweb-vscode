@@ -11,7 +11,7 @@ import { apiReference } from '@scalar/hono-api-reference'
 
 const AUTH_COOKIE = "vscode-jwt"
 
-export function createFetchHandler(params: {
+export function createServer(params: {
     rootDir: string;
     readOnly: boolean | string[];
     password?: string;
