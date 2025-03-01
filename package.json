@@ -6,7 +6,7 @@
   "description": "Smallweb integration for Visual Studio Code",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/pomdtr/smallweb-vscode"
+    "url": "https://github.com/pomdtr/smallweb-vscode"
   },
   "version": "0.0.1-test.1",
   "engines": {
