@@ -1,0 +1,67 @@
+{
+  "name": "smallweb",
+  "publisher": "pomdtr",
+  "icon": "./assets/icon.png",
+  "displayName": "Smallweb",
+  "description": "Smallweb integration for Visual Studio Code",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pomdtr/smallweb-vscode"
+  },
+  "version": "0.0.1-test.1",
+  "engines": {
+    "vscode": "^1.97.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "workspaceContains:.smallweb",
+    "workspaceContains:smallweb.json"
+  ],
+  "browser": "./dist/web/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "smallweb.openInExternalBrowser",
+        "title": "Open in Browser",
+        "category": "Smallweb"
+      },
+      {
+        "command": "smallweb.openInSimpleBrowser",
+        "title": "Open in Simple Browser",
+        "category": "Smallweb"
+      }
+    ]
+  },
+  "scripts": {
+    "test": "vscode-test-web --browserType=chromium --extensionDevelopmentPath=. --extensionTestsPath=dist/web/test/suite/extensionTests.js",
+    "pretest": "npm run compile-web",
+    "vscode:prepublish": "npm run package-web",
+    "compile-web": "npm run check-types && npm run lint && node esbuild.js",
+    "watch-web": "npm-run-all -p watch-web:*",
+    "watch-web:esbuild": "node esbuild.js --watch",
+    "watch-web:tsc": "tsc --noEmit --watch --project tsconfig.json",
+    "package-web": "npm run check-types && npm run lint && node esbuild.js --production",
+    "check-types": "tsc --noEmit",
+    "lint": "eslint src",
+    "run-in-browser": "vscode-test-web --browserType=chromium --extensionDevelopmentPath=. ."
+  },
+  "devDependencies": {
+    "@esbuild-plugins/node-globals-polyfill": "^0.2.3",
+    "@types/assert": "^1.5.11",
+    "@types/mocha": "^10.0.10",
+    "@types/vscode": "^1.97.0",
+    "@typescript-eslint/eslint-plugin": "^8.22.0",
+    "@typescript-eslint/parser": "^8.22.0",
+    "@vscode/test-web": "^0.0.66",
+    "assert": "^2.1.0",
+    "esbuild": "^0.24.2",
+    "eslint": "^9.19.0",
+    "glob": "^11.0.1",
+    "mocha": "^11.1.0",
+    "npm-run-all": "^4.1.5",
+    "typescript": "^5.7.3"
+  },
+  "dependencies": {}
+}
