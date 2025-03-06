@@ -24,12 +24,12 @@
     "commands": [
       {
         "command": "smallweb.openInExternalBrowser",
-        "title": "Open in Browser",
+        "title": "Open App in Browser",
         "category": "Smallweb"
       },
       {
         "command": "smallweb.openInSimpleBrowser",
-        "title": "Open in Simple Browser",
+        "title": "Open App in Simple Browser",
         "category": "Smallweb"
       }
     ]
