@@ -94,7 +94,7 @@ export function activate(context: vscode.ExtensionContext) {
 	// The command has been defined in the package.json file
 	// Now provide the implementation of the command with registerCommand
 	// The commandId parameter must match the command field in package.json
-	context.subscriptions.push(vscode.commands.registerCommand('smallweb.openAppInExternalBrowser', async () => {
+	context.subscriptions.push(vscode.commands.registerCommand('smallweb.openCurrentAppInBrowser', async () => {
 		const currentDocument = vscode.window.activeTextEditor?.document;
 		const currentFolder = currentDocument ? vscode.Uri.joinPath(currentDocument.uri, "..") : vscode.workspace.workspaceFolders?.[0].uri;
 		if (!currentFolder) {
@@ -110,7 +110,7 @@ export function activate(context: vscode.ExtensionContext) {
 		await vscode.env.openExternal(appUrl);
 	}));
 
-	context.subscriptions.push(vscode.commands.registerCommand('smallweb.openAppInSimpleBrowser', async () => {
+	context.subscriptions.push(vscode.commands.registerCommand('smallweb.openCurrentAppInSimpleBrowser', async () => {
 		const currentDocument = vscode.window.activeTextEditor?.document;
 		const currentFolder = currentDocument ? vscode.Uri.joinPath(currentDocument.uri, "..") : vscode.workspace.workspaceFolders?.[0].uri;
 		if (!currentFolder) {

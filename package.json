@@ -8,7 +8,7 @@
     "type": "git",
     "url": "https://github.com/pomdtr/smallweb-vscode"
   },
-  "version": "0.1.0",
+  "version": "0.2.0",
   "engines": {
     "vscode": "^1.97.0"
   },
@@ -22,13 +22,13 @@
   "contributes": {
     "commands": [
       {
-        "command": "smallweb.openAppInExternalBrowser",
-        "title": "Open App in Browser",
+        "command": "smallweb.openCurrentAppInBrowser",
+        "title": "Open Current App in Browser",
         "category": "Smallweb"
       },
       {
-        "command": "smallweb.openAppInSimpleBrowser",
-        "title": "Open App in Simple Browser",
+        "command": "smallweb.openCurrentAppInSimpleBrowser",
+        "title": "Open Current App in Simple Browser",
         "category": "Smallweb"
       },
       {
