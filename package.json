@@ -23,16 +23,33 @@
   "contributes": {
     "commands": [
       {
-        "command": "smallweb.openInExternalBrowser",
+        "command": "smallweb.openAppInExternalBrowser",
         "title": "Open App in Browser",
         "category": "Smallweb"
       },
       {
-        "command": "smallweb.openInSimpleBrowser",
+        "command": "smallweb.openAppInSimpleBrowser",
         "title": "Open App in Simple Browser",
         "category": "Smallweb"
+      },
+      {
+        "command": "smallweb.openApp",
+        "title": "Open App",
+        "category": "Smallweb"
       }
-    ]
+    ],
+    "configuration": {
+      "title": "Smallweb",
+      "properties": {
+        "smallweb.dirs": {
+          "type": "array",
+          "description": "Directories to search for Smallweb apps",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    }
   },
   "scripts": {
     "test": "vscode-test-web --browserType=chromium --extensionDevelopmentPath=. --extensionTestsPath=dist/web/test/suite/extensionTests.js",
@@ -63,5 +80,7 @@
     "npm-run-all": "^4.1.5",
     "typescript": "^5.7.3"
   },
-  "dependencies": {}
+  "dependencies": {
+    "@std/jsonc": "npm:@jsr/std__jsonc@^1.0.1"
+  }
 }

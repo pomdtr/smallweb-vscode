@@ -3,6 +3,7 @@
 import * as vscode from 'vscode';
 import { QuickPickItem } from 'vscode';
 
+
 export type Config = {
 	domain?: string;
 }
@@ -14,6 +15,21 @@ async function fileExists(uri: vscode.Uri) {
 	} catch (_) {
 		return false;
 	}
+}
+
+async function loadConfig(folderUri: vscode.Uri): Promise<Config | null> {
+	for (const configPath of [vscode.Uri.joinPath(folderUri, '.smallweb', 'config.jsonc'), vscode.Uri.joinPath(folderUri, '.smallweb', 'config.json')]) {
+		try {
+			const configBytes = await vscode.workspace.fs.readFile(configPath);
+			const jsonc = await import("@std/jsonc");
+			const config = jsonc.parse(new TextDecoder().decode(configBytes));
+			return config as Config;
+		} catch (_) {
+			continue;
+		}
+	}
+
+	return null;
 }
 
 async function getAppUrl(folderUri: vscode.Uri) {
@@ -34,9 +50,12 @@ async function getAppUrl(folderUri: vscode.Uri) {
 		smallwebFolder = parentFolder;
 	}
 
-	const configUri = vscode.Uri.joinPath(smallwebFolder, '.smallweb', 'config.json');
-	const configBytes = await vscode.workspace.fs.readFile(configUri);
-	const config = JSON.parse(new TextDecoder().decode(configBytes));
+	const config = await loadConfig(smallwebFolder);
+	if (!config) {
+		vscode.window.showErrorMessage('No config found');
+		return;
+	}
+
 	if (!config.domain) {
 		vscode.window.showErrorMessage('No domain configured');
 		return;
@@ -75,7 +94,7 @@ export function activate(context: vscode.ExtensionContext) {
 	// The command has been defined in the package.json file
 	// Now provide the implementation of the command with registerCommand
 	// The commandId parameter must match the command field in package.json
-	context.subscriptions.push(vscode.commands.registerCommand('smallweb.openInExternalBrowser', async () => {
+	context.subscriptions.push(vscode.commands.registerCommand('smallweb.openAppInExternalBrowser', async () => {
 		const currentDocument = vscode.window.activeTextEditor?.document;
 		const currentFolder = currentDocument ? vscode.Uri.joinPath(currentDocument.uri, "..") : vscode.workspace.workspaceFolders?.[0].uri;
 		if (!currentFolder) {
@@ -91,7 +110,7 @@ export function activate(context: vscode.ExtensionContext) {
 		await vscode.env.openExternal(appUrl);
 	}));
 
-	context.subscriptions.push(vscode.commands.registerCommand('smallweb.openInSimpleBrowser', async () => {
+	context.subscriptions.push(vscode.commands.registerCommand('smallweb.openAppInSimpleBrowser', async () => {
 		const currentDocument = vscode.window.activeTextEditor?.document;
 		const currentFolder = currentDocument ? vscode.Uri.joinPath(currentDocument.uri, "..") : vscode.workspace.workspaceFolders?.[0].uri;
 		if (!currentFolder) {
@@ -109,7 +128,64 @@ export function activate(context: vscode.ExtensionContext) {
 		});
 	}));
 
+	async function openApp(domain: string = "") {
+		if (!domain) {
+			const input = await vscode.window.showInputBox({ prompt: 'Enter the domain of the app to open' });
+			if (!input) {
+				return;
+			}
 
+			domain = input;
+		}
+
+		const dirs = vscode.workspace.getConfiguration("smallweb").get<string[]>("dirs", []);
+		const [app, ...parts] = domain!.split('.');
+		const rootDomain = parts.join('.');
+		console.debug({ app, rootDomain });
+		for (const dir of dirs) {
+			const config = await loadConfig(vscode.Uri.file(dir));
+			if (!config) {
+				continue;
+			}
+
+			if (config.domain !== rootDomain) {
+				continue;
+			}
+
+			const appFolder = vscode.Uri.joinPath(vscode.Uri.file(dir), app);
+			if (!await fileExists(appFolder)) {
+				vscode.window.showErrorMessage('App not found');
+				return;
+			}
+
+			await vscode.commands.executeCommand('vscode.openFolder', appFolder, true);
+			return;
+		}
+
+		vscode.window.showErrorMessage(`Could not find app directory for domain: ${domain}`);
+	}
+
+	context.subscriptions.push(vscode.commands.registerCommand('smallweb.openApp', openApp));
+
+	context.subscriptions.push(vscode.window.registerUriHandler({
+		async handleUri(uri: vscode.Uri) {
+			switch (uri.path) {
+				case '/openApp': {
+					const domain = new URLSearchParams(uri.query).get('domain');
+					if (!domain) {
+						vscode.window.showErrorMessage('No domain provided');
+						return;
+					}
+
+					await openApp(domain);
+					break;
+				}
+				default: {
+					vscode.window.showErrorMessage('Invalid URI');
+				}
+			}
+		}
+	}));
 }
 
 // This method is called when your extension is deactivated
