@@ -16,8 +16,7 @@
     "Other"
   ],
   "activationEvents": [
-    "workspaceContains:.smallweb",
-    "workspaceContains:smallweb.json"
+    "onUri"
   ],
   "browser": "./dist/web/extension.js",
   "contributes": {
